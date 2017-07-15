@@ -8,3 +8,4 @@ BuildingEscape/Content/StarterContent/
 
 ## Visual Studio Generated Files ##
 *.VC.db
+*.ipch
