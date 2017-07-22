@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/PrimitiveComponent.h"
 #include "GameFramework/Volume.h"
 
 #define OUT
@@ -70,6 +71,14 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 	PressurePlate->GetOverlappingActors(OUT OverlappingActors);
 
 	// Iterate through summing up their masses
+	for (const auto* OverlappedActor : OverlappingActors)
+	{
+		if (OverlappedActor)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Overlapping Actor: %s"), *(OverlappedActor->GetName()));
+			TotalMass += OverlappedActor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+		}
+	}
 
 	return TotalMass;
 }
