@@ -51,7 +51,7 @@ void UGrabber::SetupInputComponent()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s InputComponent NOT Found"), *(GetOwner()->GetName()))
+		UE_LOG(LogTemp, Error, TEXT("%s InputComponent NOT Found"), *(GetOwner()->GetName()));
 	}
 }
 
@@ -60,6 +60,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!PhysicsHandle) { return; }
 	// If the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent)
 	{
@@ -80,6 +81,7 @@ void UGrabber::Grab()
 	/// Attach a physics handle if hit
 	if (ActorHit)
 	{
+		if (!PhysicsHandle) { return; }
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab,
 			NAME_None, // No bones needed
@@ -91,7 +93,7 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
+	if (!PhysicsHandle) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 
